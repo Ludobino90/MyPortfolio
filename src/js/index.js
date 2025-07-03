@@ -1,31 +1,43 @@
-/*
-Objetivo 1 - quando o usuario clicar no botao de "Mostrar Mais", deve abrir os projetos que estao escondidos no html:
+// Mostrar e ocultar projetos
+const toggleProjectsButton = document.querySelector('.btn-mostrar-projetos');
+const allProjects = document.querySelectorAll('.projeto');
 
-        Passo 1 - pegar o botao "Mostrar Mais" no JS para poder verificar quando o usuario clicar em cima dele.
+toggleProjectsButton.addEventListener("click", () => {
+  const isShowingMore = toggleProjectsButton.textContent === "Show More";
 
-        Passo 2 - Identificar o clique do botao.
+  if (isShowingMore) {
+    allProjects.forEach(project => project.classList.add('ativo'));
+    toggleProjectsButton.textContent = "Show Less";
+  } else {
+    allProjects.forEach((project, index) => {
+      if (index > 3) {
+        project.classList.remove('ativo');
+      }
+    });
+    toggleProjectsButton.textContent = "Show More";
+  }
+});
 
-        Passo 3 - adicionar a classe: "Ativo" nos projetos escondidos.
+// Modal do CV
+document.addEventListener('DOMContentLoaded', () => {
+  const modal = document.getElementById('cv-modal');
+  const openBtn = document.getElementById('open-cv-modal');
+  const closeBtn = modal.querySelector('.close');
 
-Objetivo 2 - esconder o botao de "mostrar Mais":
+  if (openBtn && modal && closeBtn) {
+    openBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      modal.classList.remove('hidden');
+    });
 
-        Passo 1 - pegar o botao e esconder ele.
+    closeBtn.addEventListener('click', () => {
+      modal.classList.add('hidden');
+    });
 
-*/
-
-//Objetivo 1:
-//Passo 1:
-
-const botaoMostrarProjetos = document.querySelector('.btn-mostrar-projetos'); //representacao do botao no JS/ QuerySeletor busca apenas 1 elemento que tem esse ID/classe
-const projetosInativos = document.querySelectorAll('.projeto:not(.ativo)'); //Query Selector ALL, busca todos os elementos
-
-
-
-
-//Passo 2:
-botaoMostrarProjetos.addEventListener("click", () => { //bloco de execucao da funcao - dispara a acao
-    //Passo 3: dentro do Passo 2
-    projetosInativos.forEach(projetoInativo => {
-        projetoInativo.classList.add('ativo');
-    })
-})
+    window.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.add('hidden');
+      }
+    });
+  }
+});
